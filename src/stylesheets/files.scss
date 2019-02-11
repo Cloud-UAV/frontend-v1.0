@@ -1,0 +1,123 @@
+@import 'common';
+$full-size: 100%;
+.errorMsg h6 {
+    text-align: center;
+    color: red;
+    font-size: 16px;
+}
+
+.underline {
+    border-top: 2px solid blue;
+}
+
+// .nav-wrapper{
+// 	background-color: rgba(38, 38, 38, 1);
+// }
+// .navbar-logo{
+// 	height: 64px;
+// 	width: 180px;
+// 	padding-left: 10px;
+// 	margin: 0px;
+// 	display: inline-block;
+// }
+// .navbar-logo > a{
+// 	height: 64px;
+// 	width: 180px;
+// 	display: -webkit-flex;
+// 	display: flex;
+// 	-webkit-align-items: center;
+// 	align-items: center;
+// }
+// #nav-mobile a:hover{
+// 	background-color: rgb(51, 51, 51);
+// }
+.fa.fa-angle-right,
+.fa.fa-angle-left {
+    font-size: 40px;
+    color: white;
+}
+
+.uploadFilesLink {
+    cursor: pointer;
+}
+
+.uploadBtn {
+    text-align: right;
+    margin-top: 0px;
+    height: 37px;
+}
+
+.uploadBtn>a:hover {
+    color: #1976d2;
+}
+
+
+iframe {
+    margin-top: 20px;
+    // height: 100%;
+    width: 100%;
+    border: 0px;
+}
+
+.uploadFilesTitle {
+    font-size: 30px;
+}
+
+.sideNavBarIcon>i {
+    z-index: 0;
+    background-color: #404040;
+    padding: 5px 5px;
+    width: 40px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.sideNavBarIcon {
+    position: relative;
+    top: 10px;
+    width: 40px;
+    // left: 300px;
+    z-index: 999;
+    display: inline-block;
+}
+
+.modal {
+    // max-height: 280px !important;
+}
+
+.modal-content h5 {
+    color: rgb(64, 64, 64);
+    // font-size: 20px;
+}
+
+.modal-content h6 {
+    color: rgb(64, 64, 64);
+}
+
+.modal-content .underline {
+    border: 1px solid rgb(217, 217, 217);
+    margin-bottom: 10px;
+}
+
+#removeSharedPerson {
+    color: rgb(230, 46, 0);
+    cursor: pointer;
+}
+
+#imageAnimLink {
+    cursor: pointer;
+}
+
+.collapsible-header {
+    background-color: rgba(242, 242, 242, 0.6);
+}
+
+.fa.fa-list-ul {
+    font-size: 16px;
+}
+
+.warningBox{
+    background-color: rgb(255, 204, 0);
+    padding: 10px 10px;
+    color: rgb(77, 77, 77);
+}

@@ -1,0 +1,20 @@
+@import 'common';
+@import "responsive-table";
+
+a {
+  cursor: pointer;
+}
+
+.no-padding{
+  padding: 0;
+}
+
+.icon-card .card .card-content {
+  height:134px;
+}
+
+#map {
+  margin-top: 9.5px;
+  width: 100%;
+  height: 293px;
+}

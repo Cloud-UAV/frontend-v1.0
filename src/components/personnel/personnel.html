@@ -1,0 +1,100 @@
+<html>
+
+<head>
+  <title>Personnel</title>
+  <meta charset='UTF-8'>
+
+  <link rel="stylesheet" type="text/css" href="../../lib/css/libsConcatCSS.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script type="text/javascript" src='../../lib/libsConcat.js'></script>
+
+  <link rel="stylesheet" type="text/css" href="../../stylesheets/personnel.css">
+  <script type="text/javascript" src='../../config.js'></script>
+  <script type="text/javascript" src='../assets/httpCalls.js'></script>
+  <script type="text/javascript" src='../assets/sharedComponents.js'></script>
+  <script type="text/javascript" src='./personnelController.js'></script>
+  <script type="text/javascript" src='./personnelView.js'></script>
+  <script type="text/javascript" src='./personnel.js'></script>
+  <script src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.min.js"></script>
+</head>
+
+<body>
+  <div id='pageContainer'>
+    <side-nav-bar v-bind:user='user' v-show='!loading'></side-nav-bar>
+
+    <header>
+      <ul class="dropdown-content" id="user_dropdown">
+        <li><a class="theme-text" href="/components/accountDetails/accountDetails.html">My Account</a></li>
+        <li><a class="theme-text" href="#" v-on:click="logoutBtn">Logout</a></li>
+      </ul>
+
+      <nav class="theme" role="navigation">
+        <div class="nav-wrapper">
+          <img class="brand-top" src="../../img/CloudUAV_White.png" />
+          <ul class="right">
+            <li>
+              <a class='right dropdown-button' href='' data-activates='user_dropdown'><i class=' material-icons'>account_circle</i></a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <nav class="theme" role="navigation">
+        <div class="nav-wrapper theme lighten-1">
+          <div class="row">
+            <div class="col s12">
+              <menubar-icon></menubar-icon>
+              <a href="/components/home/home.html" class="breadcrumb">Home</a>
+              <a href="/components/personnel/personnel.html" class="breadcrumb">Personnel</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <div class='loadingIcon' v-show='loading'>
+        <object data='../../img/sensorupLogosvg.svg' type='image/svg+xml'>
+		<div class='loadingGif'></div>
+	</object>
+      </div>
+      <div v-show='!loading'>
+        <div class='container-fluid'>
+          <div v-for="items in groupedPersonnelData" class="row">
+            <div class="col s12 m6 l4" v-for='item in items'>
+              <div class="card theme lighten-2 hoverable">
+                <div class="card-content white-text">
+                  <div class="row center">
+                    <div class="thumbnail small circle">
+                      <img v-bind:src="item.imgURL" class="">
+                    </div>
+                  </div>
+                  <span class="card-title">{{item.firstName}} {{item.lastName}}</span>
+                  <ul>
+                    <li v-for='item in item.Roles'>{{item.name}}</li>
+                  </ul>
+                  <hr/>
+                  <p>E: {{item.email}}</p>
+                  <p>T: {{item.phone_number}}</p>
+                </div>
+                <div class="card-action">
+                  <a v-show='item.userID == user.id' class="modal-trigger" v-bind:href="'#personnelViewModal_'+item.id">Delete</a>
+                </div>
+              </div>
+              <div v-bind:id="'personnelViewModal_'+item.id" class="modal">
+                <div class="modal-content">
+                  <p>Are you sure you want to delete?</p>
+                </div>
+                <div class="modal-footer">
+                  <a href="#!" class="modal-action modal-close waves-effect btn-flat">Cancel</a>
+                  <a href="#!" v-on:click='deletePersonnel(item.id, $event)' class="red white-text modal-action modal-close waves-effect btn-flat">Delete</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+
+</html>

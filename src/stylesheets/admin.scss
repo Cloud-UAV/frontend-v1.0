@@ -1,0 +1,57 @@
+@import 'common';
+
+.topbarsearch {
+  min-width: 366px;
+  float:right;
+
+  input[type=text]:not(.browser-default):focus:not([readonly]) {
+    box-shadow: 0 1px 0 0 #ffffff !important;
+  }
+  input[type=text]:not(.browser-default) {
+    font-size: 1.2rem !important;
+  }
+
+  .prefix {
+    font-size: 3rem !important;
+    bottom: 6px;
+  }
+
+  nav ul li:hover,
+  nav ul li.active {
+    background-color: none !important;
+  }
+
+}
+.user-card {
+
+  .card-action {
+    .switch {
+      display: inline-block;
+
+      & label input[type=checkbox]:checked + .lever:after {
+        background-color: #00243d;
+      }
+
+      & label .lever:after {
+        background-color: #588260;
+      }
+    }
+
+    a {
+        margin-right: 0 !important;
+    }
+  }
+}
+
+
+
+li {
+  cursor: pointer;
+}
+
+
+.fileImg {
+  width: 70px !important;
+  height: auto !important;
+  border-radius: 0 !important;
+}

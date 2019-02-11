@@ -1,0 +1,183 @@
+@import 'sidenavbar';
+$full-size: 100%;
+$body-color: rgba(242, 242, 242,0.5);
+$dark-blue: #00243D;
+$light-blue: #0094c4;
+$light-grey: #e8e8e8;
+$accent-green: #588260;
+
+footer,
+header,
+main {
+  padding-left: 300px;
+}
+
+a {
+  color: $light-blue;
+}
+/* ------------ Topbar styles block  ------------ */
+.brand-top {
+  visibility: hidden;
+}
+/* ------------  /end styles block    ------------*/
+/* ------------ Responsive styles block  ------------ */
+@media only screen and (max-width : 992px) {
+  footer,
+  header,
+  main {
+    padding-left: 0;
+  }
+
+  .brand-top {
+    margin-top: 11px;
+    margin-left: 24px;
+    height: 30px;
+    visibility: visible;
+  }
+}
+/* ------------  /end styles block    ------------*/
+@media only screen and (min-width : 600px) {
+  main {
+    min-height: calc(100vh - 322px);
+  }
+}
+/* ------------ Sticky footer styles block  ------------ */
+/* ------------  /end styles block    ------------*/
+/* ------------ loading icon styles block  ------------ */
+
+
+.loadingIcon {
+  height: $full-size;
+  width: $full-size;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.loadingGif {
+  background: url("../img/Preloaded_3.gif");
+  background-size: 80px 80px;
+  height: 80px;
+  width: 80px;
+}
+/* ------------  /end styles block    ------------*/
+/* ------------ Dashoboard card styles block  ------------ */
+.card-icon i {
+  width: 100%;
+  text-align: center;
+  color: rgba(0, 0, 0, .25);
+}
+
+.card-text {
+  width: calc(100% - 60px);
+}
+/* ------------  /end styles block    ------------*/
+/* ------------ TOAST styles block  ------------ */
+.toast {
+  &.success {
+    background-color: #26a69a;
+  }
+
+  &.info {
+    background-color: #c7dcfc;
+  }
+
+  &.danger {
+    background-color: #ee6e73;
+  }
+}
+/* ------------  /end styles block    ------------*/
+object {
+  height: 70px;
+  width: 70px;
+}
+
+.messageContainer {
+  text-align: center;
+  display: block;
+  position: relative;
+}
+
+.messageContainer > span {
+  border: 1px solid white;
+  background-color: #5cb85c;
+  border-radius: 5px;
+  padding: 15px 50px;
+  color: white;
+  position: relative;
+  text-align: center;
+  width: 100%;
+  display: inline;
+}
+
+.messageContainer .fa.fa-times {
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.messageContainer .fa.fa-times:hover {
+  color: rgb(230, 230, 230);
+}
+
+.messageContainer .closeBtn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 2px 3px;
+}
+
+.errorMesge > .messageContainer > span {
+  background-color: rgb(230, 0, 0);
+}
+
+.optionBtnsList > a {
+  padding: 5px;
+  color: rgb(140, 140, 140);
+  cursor: pointer;
+  background-color: #f3f3f3;
+  margin: 5px;
+}
+
+.optionBtnsList {
+  text-align: right;
+  margin-top: 20px;
+  a {
+    padding: 5px 10px;
+  }
+}
+
+.optionBtnsList > a:hover {
+  background-color: $dark-blue;
+  color: white;
+}
+
+.optionBtnsList > a.active {
+  background-color: $dark-blue;
+  color: white;
+}
+
+.lightboxImage {
+  visibility: hidden;
+}
+
+.break {
+  border-bottom: 1px solid rgb(230, 230, 230);
+  text-align: center;
+  width: 100%;
+  height: 18px;
+  margin-bottom: 20px;
+}
+
+.break > span {
+  padding: 0 10px;
+  font-size: 22px;
+  background-color: white;
+  color: rgb(166, 166, 166);
+}
+
+.drag-target {
+  z-index: -1 !important;
+}

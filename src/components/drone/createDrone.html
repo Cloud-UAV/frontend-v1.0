@@ -1,0 +1,94 @@
+<html>
+
+<head>
+  <title>Create UAV</title>
+  <meta charset='UTF-8'>
+
+  <link rel="stylesheet" type="text/css" href="../../lib/css/libsConcatCSS.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <script type="text/javascript" src='../../lib/libsConcat.js'></script>
+
+  <link rel="stylesheet" type="text/css" href="../../stylesheets/drone.css">
+  <script type="text/javascript" src='../../config.js'></script>
+  <script type="text/javascript" src='../assets/httpCalls.js'></script>
+  <script type="text/javascript" src='../assets/sharedComponents.js'></script>
+  <script type="text/javascript" src='./droneController.js'></script>
+  <script type="text/javascript" src='./createDroneView.js'></script>
+</head>
+
+<body>
+  <div id='pageContainer'>
+    <side-nav-bar v-bind:user='user' v-show='!loading'></side-nav-bar>
+    <header>
+      <ul class="dropdown-content" id="user_dropdown">
+        <li><a class="theme-text" href="/components/accountDetails/accountDetails.html">My Account</a></li>
+        <li><a class="theme-text" href="#" v-on:click="logoutBtn">Logout</a></li>
+      </ul>
+
+      <nav class="theme" role="navigation">
+        <div class="nav-wrapper">
+          <img class="brand-top" src="../../img/CloudUAV_White.png" />
+          <ul class="right">
+            <li>
+              <a class='right dropdown-button' href='' data-activates='user_dropdown'><i class=' material-icons'>account_circle</i></a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <nav class="theme" role="navigation">
+        <div class="nav-wrapper theme lighten-1">
+          <div class="row">
+            <div class="col s12">
+              <menubar-icon></menubar-icon>
+              <a href="/components/home/home.html" class="breadcrumb">Home</a>
+              <a href="/components/drone/drone.html" class="breadcrumb">UAVs</a>
+              <a href="/components/drone/createDrone.html" class="breadcrumb">Create</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main>
+
+      <div class='loadingIcon' v-show='loading'>
+        <object data='../../img/sensorupLogosvg.svg' type='image/svg+xml'><div class='loadingGif'></div></object>
+      </div>
+      <div class='container' v-show='!loading'>
+          <div class='row mt-3'>
+              <div class="input-field col s12">
+                <input placeholder="CloudUAV UAV" id="name" type="text" class="validate" data-length="255" v-model='drone.name' required="" aria-required="true">
+                <label for="name" data-error="The Name is required" data-success="Looks good!">Name *</label>
+              </div>
+          </div>
+          <div class='row'>
+              <div class="input-field col s12">
+                <textarea id="icon_prefix2" class="materialize-textarea" data-length="255" placeholder="3DR UAV" id='description' v-model='drone.description'></textarea>
+                <label for="description">Description</label>
+              </div>
+          </div>
+          <div class='row'>
+              <div class="input-field col s12">
+                <textarea id="icon_prefix2" class="materialize-textarea" placeholder="Spare lense" id='inventory' v-model='drone.inventory' required="" aria-required="true"></textarea>
+                <label for="inventory" data-error="The inventory information is required" data-success="Looks good!">Inventory *</label>
+              </div>
+          </div>
+          <div class='row'>
+            <div class='col s12'>
+              <a class="waves-effect waves-light btn" v-on:click='postDrone'>Create</a>
+            </div>
+          </div>
+        </div>
+    </main>
+  </div>
+
+  <script>
+    $(document).ready(function() {
+      var createSensor_view = new CreateSensorView();
+      createSensor_view.pageContainer.getUserInfo();
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+$full-size: 100%;
+body {
+    height: $full-size;
+    width: $full-size;
+}
+
+#map {
+    height: $full-size;
+    width: $full-size;
+}
+
+#controlBtn {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    z-index: 999999999;
+    margin: 10px 10px;
+}
+
+.fa.fa-map-pin,
+.fa.fa-street-view {
+    font-size: 24px;
+}
+
+#imagePlayer {
+    z-index: 999999999;
+    height: 300px;
+    width: auto;
+    background-color: rgba(64, 64, 64, 0.5);
+    border: 0px solid rgba(64, 64, 64, 0.9) !important;
+}
+
+#imageSpinner {
+    position: absolute;
+    top: 135px;
+    left: 135px;
+}
+
+.imageWrapper {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    z-index: 999999999;
+    margin: 10px 10px;
+}

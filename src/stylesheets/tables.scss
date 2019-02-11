@@ -1,0 +1,33 @@
+#filesTable th, #filesTable td {
+	text-align: center;
+
+	border-bottom: 1px solid rgb(242, 242, 242) !important;
+}
+
+#filesTable{
+	border-bottom: 1px solid rgb(242, 242, 242) !important;
+}
+
+#removeFile{
+	cursor: pointer;
+}
+
+.fa.fa-trash, .fa.fa-download, .fa.fa-user-plus{
+	font-size: 20px;
+}
+
+a{
+	cursor: pointer;
+}
+
+#download{
+	color: rgba(102, 179, 255, 1);
+}
+
+#share{
+	color: rgba(0, 153, 51, 1);
+}
+
+.mdl-button--colored {
+  background: #588260 !important;
+}

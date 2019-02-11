@@ -1,0 +1,115 @@
+    @import 'common';
+#sidebar {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 10%;
+    float: left;
+    background-color: white;
+    padding: 20px;
+    width: 180px;
+    color: rgb(0, 153, 204);
+}
+
+a {
+    cursor: pointer;
+}
+
+ul.bullet-list {
+    li {
+        list-style-type: disc;
+        list-style-position: inside;
+    }
+}
+
+ul.dash-list {
+    li {
+        list-style-type: circle;
+        list-style-position: inside;
+    }
+}
+
+ol.alpha-list {
+    li {
+        list-style-type: lower-alpha;
+        list-style-position: inside;
+    }
+}
+
+h6 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+table.blue-styled-table {
+    thead th {
+        text-align: center;
+    }
+    tbody tr {
+        border-bottom: 1px solid rgb(208, 208, 208);
+        td {
+            padding: 20px 20px;
+        }
+    }
+    td:nth-child(1) {
+        font-weight: 600;
+        background-color: rgba(224, 234, 245, 1);
+        border-right: 1px solid rgb(208, 208, 208);
+    }
+}
+
+@mixin style-table-td-elems($heading-color, $subheading-color, $class-name) {
+    &{
+        td:first-child{
+            font-weight: bold;
+            background-color: $heading-color;    
+        }
+        td:nth-child(2){
+            font-weight: bold;
+            background-color: $subheading-color;
+        }
+        
+    }
+    & + tr.#{$class-name}{
+        td:nth-child(1){
+            background-color: $subheading-color;
+        }
+        td:nth-child(2){
+            font-weight: 200;
+            background-color: transparent!important;
+        }
+    }
+}
+
+table.conditions-table {
+    position: relative;
+    display: table;
+    thead>tr>th {
+        text-align: center;
+    }
+//    @include style-table-td-elems(rgba(248, 218, 120, 1), rgba(253, 243, 208, 1));
+    tbody tr {
+        border-bottom: 1px solid rgb(208, 208, 208);
+        &.UAVSystem {
+            @include style-table-td-elems(rgba(248, 218, 120, 1), rgba(253, 243, 208, 1), 'UAVSystem');
+        }
+        &.flightConditionsBothCateg{
+            @include style-table-td-elems(rgba(248, 218, 120, 1), rgba(253, 243, 208, 1), 'flightConditionsBothCateg');
+        }
+        &.flightConditionsSpecific{
+            @include style-table-td-elems(rgba(233, 178, 138, 1), rgba(247, 229, 215, 1), 'flightConditionsSpecific');
+        }
+        &.training{
+            @include style-table-td-elems(rgba(177, 206, 148, 1), rgba(229, 238, 219, 1), 'training');
+        }
+        &.reporting {
+            @include style-table-td-elems(rgba(164, 193, 226, 1), rgba(224, 234, 245, 1), 'reporting');
+        }
+        td {
+            padding: 20px 20px;
+            &:not(:last-child){
+                border-right: 1px solid rgb(208, 208, 208);
+            }
+        }
+       
+    }
+}

@@ -1,0 +1,32 @@
+<html>
+
+<head>
+    <title>Map</title>
+    <link rel="stylesheet" type="text/css" href="../../lib/css/libsConcatCSS.css">
+    <script type="text/javascript" src='../../lib/libsConcat.js'></script>
+
+    <link rel="stylesheet" type="text/css" href="/stylesheets/imagesMap.css">
+    <script type="text/javascript" src='../../config.js'></script>
+    <script type="text/javascript" src='../assets/httpCalls.js'></script>
+    <script type="text/javascript" src='../assets/sharedComponents.js'></script>
+    <script type="text/javascript" src='./imagesMapController.js'></script>
+    <script type="text/javascript" src='./imagesMapView.js'></script>
+    <script type="text/javascript" src='./imagesMap.js'></script>
+</head>
+
+<body>
+    <span id='pageContainer'>
+<div>
+	<a class="waves-effect waves-light btn" id='controlBtn' v-on:click='controlBtnClickEvent' ><i class="fa" v-bind:class='{"fa-play-circle-o": controlBtnIcon, "fa-stop-circle-o": !controlBtnIcon}' aria-hidden="true"></i> {{controlBtnText}}</a>
+    <div class='imageWrapper'>
+        <img id='imagePlayer' style="display:none" src='' />
+        <img src="/img/videoSpinner.gif" height='40' width='40' id='imageSpinner' v-show='videoSpinner'/>
+    </div>
+    
+</div>
+</span>
+
+    <div id='map'></div>
+</body>
+
+</html>

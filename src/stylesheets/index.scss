@@ -1,0 +1,88 @@
+$full-size: 100%;
+
+html {
+display: table;
+margin: auto;
+height:100%;
+}
+
+body {
+display: table-cell;
+vertical-align: middle;
+background-color: #00243D;
+}
+
+#pageContainer {
+
+ .card-panel {
+    width: 300px;
+  }
+  @media screen and (min-width: 1200px) {
+    .card-panel {
+      width: 430px;
+    }
+  }
+
+  .btn {
+    background-color: #588260;
+  }
+
+  .logo {
+    margin: 20px 0;
+    height: 60px;
+  }
+
+  .content {
+      padding-top: 10px;
+  }
+
+  ul {
+    list-style: none;
+  }
+
+  ul li {
+    display: inline;
+    margin: 0 20px;
+  }
+
+  .input-field input {
+    margin-bottom: 0;
+  }
+
+  .no-margin-bottom {
+    margin-bottom: 0;
+  }
+}
+
+.loadingIcon {
+    height: $full-size;
+    width: $full-size;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+.loadingGif {
+    background: url('../img/Preloaded_3.gif');
+    background-size: 80px 80px;
+    height: 80px;
+    width: 80px;
+}
+
+object {
+    height: 70px;
+    width: 70px;
+}
+
+.errorMsg h6 {
+    text-align: center;
+    color: red;
+    font-size: 16px;
+}
+
+a {
+    cursor: pointer;
+}

@@ -1,0 +1,226 @@
+@import 'common';
+$file-outer-border-height: 200px;
+
+ul.stepper .step.active:before, ul.stepper .step.done:before {
+ background-color: $light-blue;
+}
+
+.stepper{
+  .btn-email-add{
+    margin-top: 18px;
+  }
+
+  .collection {
+      border: none;
+  }
+
+  .collapsible {
+    box-shadow: none;
+  }
+}
+
+.fa.fa-pencil {
+    font-size: 28px;
+}
+
+.droneImg {
+    text-align: center;
+}
+
+img#droneImg {
+    border: 1px solid rgb(191, 191, 191);
+    padding: 10px 10px;
+}
+
+.fa.fa-spinner {
+    font-size: 28px;
+}
+
+.sw-toolbar-bottom {
+    margin-top: 30px;
+    background-color: rgba(242, 242, 242, 0.4);
+}
+
+//.step-content {
+//    padding-top: 20px !important;
+//    padding-bottom: 20px !important;
+//    padding-left: 20px !important;
+//    padding-right: 20px !important;
+//}
+h5 {
+    color: rgb(77, 77, 77) !important;
+    font-size: 20px !important;
+}
+
+h6 {
+    color: rgb(115, 115, 115) !important;
+    font-size: 18px !important;
+}
+
+iframe {
+    margin-top: 20px;
+    //    height: 100%;
+    width: 100%;
+    border: 0px;
+    max-height: 800px;
+}
+
+//label {
+//    font-size: 12px !important;
+//}
+//
+//input,
+//textarea {
+//    font-size: 14px !important;
+//}
+.errorMessage {
+    color: rgb(230, 0, 0);
+    font-size: 18px;
+    text-align: center;
+}
+
+#smartwizard a.waves-effect:hover {
+    color: white;
+}
+
+#resetBtn {
+    margin-right: 20px;
+    border-radius: 0px;
+}
+
+#file {
+    height: $file-outer-border-height;
+    width: 100%;
+    opacity: 0;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+.fileInputBox {
+    position: relative;
+    border: 1px solid rgb(230, 230, 230);
+    width: 100%;
+    height: $file-outer-border-height;
+    padding: 15px;
+}
+
+.fileInputBox label {
+    text-align: center;
+    position: absolute;
+    top: 45%;
+    left: 45%;
+}
+
+.fileInputBoxBorder {
+    padding: 15px;
+    width: 100%;
+    height: 100%;
+    border: 2px dashed rgb(230, 230, 230);
+    overflow: auto;
+}
+
+.fileInputLabel {
+    font-size: 16px !important;
+    color: rgb(179, 179, 179);
+}
+
+.filesToUploadIcons {
+    display: inline-block;
+    height: 100px;
+    min-width: 100px;
+    padding: 10px 10px;
+    margin-right: 10px;
+    background-color: rgba(230, 230, 230, 0.7);
+    border: 1px solid rgba(230, 230, 230, 0.7);
+    border-radius: 6px;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.filename {
+    z-index: 999;
+    height: 100%;
+    width: 100%;
+    color: rgb(64, 64, 64);
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    align-items: center;
+    word-break: break-word;
+    position: relative;
+    z-index: 2;
+}
+
+.fileNames {
+    position: relative;
+}
+
+.filesToUploadIcons:before {
+    font-family: 'FontAwesome';
+    content: "\f016";
+    color: rgb(191, 191, 191);
+    font-size: 60px;
+    height: 100%;
+    width: 100%;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    align-items: center;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 1;
+}
+
+.fa.fa-file-o {
+    font-size: 60px;
+    color: rgb(179, 179, 179);
+    height: 100%;
+    width: 100%;
+    z-index: 0;
+    text-align: center;
+}
+
+.fa.fa-check {
+    font-size: 30px;
+}
+
+.createBtn {
+    background-size: 200% 100%;
+    background-image: linear-gradient(to right, #00b0ff 50%, #00c853 50%);
+    transition: background-position 0.2s;
+    -webkit-transition: background-position 0.2s;
+    -moz-transition: background-position 0.2s;
+}
+
+a.createBtn.success {
+    //    background-color: #00c853;
+    background-position: 100% 0%;
+}
+
+.projectCreatedMessage {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    background-color: #00c853;
+    padding: 10px 10px;
+    color: white;
+}
+
+.vex-overlay {
+    display: none;
+}
+
+.vex-content {
+    background-color: rgba(242, 242, 242, 0.95) !important;
+    //    color: white !important;
+    border: 1px solid rgb(217, 217, 217);
+}
+
+.stepDescriptionText{
+    color: rgb(102, 102, 102);
+}

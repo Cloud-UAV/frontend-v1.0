@@ -1,0 +1,187 @@
+<html>
+
+<head>
+  <title>Mission Info</title>
+  <meta charset='UTF-8'>
+
+  <link rel="stylesheet" type="text/css" href="../../lib/css/libsConcatCSS.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script type="text/javascript" src='../../lib/libsConcat.js'></script>
+
+  <link rel="stylesheet" type="text/css" href="../../stylesheets/missions.css">
+  <script type="text/javascript" src='../../config.js'></script>
+  <script type="text/javascript" src='../assets/httpCalls.js'></script>
+  <script type="text/javascript" src='../assets/sharedComponents.js'></script>
+  <script type="text/javascript" src='./missionsController.js'></script>
+  <script type="text/javascript" src='./missionInfoView.js'></script>
+
+</head>
+
+<body>
+  <div id='pageContainer'>
+    <side-nav-bar v-bind:user='user' v-show='!loading'></side-nav-bar>
+    <main>
+      <div class="container-fluid">
+        <div class='loadingIcon' v-show='loading'>
+          <object data='../../img/sensorupLogosvg.svg' type='image/svg+xml'>
+    		<div class='loadingGif'></div>
+    	</object>
+        </div>
+        <div v-show='!loading'>
+          <nav>
+            <div class="nav-wrapper theme lighten-1">
+              <div class="row">
+                <div class="col s12">
+                  <menubar-icon></menubar-icon>
+                  <a href="/components/missions/missions.html" class="breadcrumb">Missions</a>
+                  <a href="" class="breadcrumb">{{validator(missionModel.mission.name)}}</a>
+                </div>
+              </div>
+            </div>
+          </nav>
+          <div class='container-fluid'>
+            <div class="row">
+              <div class="col s12 m4 icon-card">
+                <div class="card theme lighten-5 white-text">
+                  <div class="card-content valign-wrapper">
+                    <div class="card-text">
+                      <h6>Total Flight Time</h6>
+                      <p>{{missionModel.mission.totalFlightTime || '0 m'}}</p>
+                    </div>
+                    <div class="card-icon">
+                      <i class="material-icons medium">access_time</i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col s6 m4 icon-card">
+                <div class="card theme lighten-4 white-text">
+                  <div class="card-content valign-wrapper">
+                    <div class="card-text">
+                      <h6>Start Time</h6>
+                      <p>{{missionModel.mission.formattedST || 'N/A'}}</p>
+                    </div>
+                    <div class="card-icon">
+                      <i class="material-icons medium">play_arrow</i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col s6 m4 icon-card">
+                <div class="card theme lighten-3 white-text">
+                  <div class="card-content valign-wrapper">
+                    <div class="card-text">
+                      <h6>End Time</h6>
+                      <p>{{missionModel.mission.formattedET || 'N/A'}}</p>
+                    </div>
+                    <div class="card-icon">
+                      <i class="material-icons medium">stop</i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col s12 m6">
+                <div class="col s12 m12 icon-card no-padding">
+                  <div class="card theme lighten-2 white-text">
+                    <div class="card-content valign-wrapper">
+                      <div class="card-text" v-if='missionModel.mission.Drone'>
+                        <h6>{{missionModel.mission.Drone.name}}</h6>
+                        <p>{{missionModel.mission.Drone.description}}</p>
+                      </div>
+                      <div class="card-text" v-else>
+                        <h6>No UAV Information</h6>
+                      </div>
+                      <div class="card-icon">
+                        <i class="material-icons medium">flight</i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col s12 m12 icon-card no-padding">
+                  <div class="card theme lighten-1 white-text">
+                    <div class="card-content valign-wrapper">
+                      <div class="card-text" v-if="missionModel.mission.Sensor">
+                        <h6>{{missionModel.mission.Sensor.name}}</h6>
+                        <p>{{missionModel.mission.Sensor.description}}</p>
+                      </div>
+                      <div class="card-text" v-else>
+                        <h6>No Sensor Information</h6>
+                      </div>
+                      <div class="card-icon">
+                        <i class="material-icons medium">linked_camera</i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col s12 m6">
+                <div id='map'></div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col s12 m6">
+                <div class="card">
+                  <div class="card-content">
+                    <span class="card-title">Personnels</span>
+                    <table class="striped">
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>Email</th>
+                          <th>Phone</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for='item in missionModel.mission.Personnels'>
+                          <td>{{item.firstName}} {{item.lastName}}</td>
+                          <td>{{item.email}}</td>
+                          <td>{{item.phone_number}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="col s12 m6">
+                <div class="card">
+                  <div class="card-content">
+                    <span class="card-title">Files</span>
+                    <table class="striped">
+                      <thead>
+                        <tr>
+                          <th>File</th>
+                          <th>Upload Date</th>
+                          <th>Download</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for='item in missionModel.mission.Files'>
+                          <td>{{item.name}}</td>
+                          <td>{{item.uploadDate}}</td>
+                          <td><a class='btn theme' v-on:click='downloadFile(item.name)'><i class='fa fa-download'></i></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    $(document).ready(function() {
+      var missionInfoView = new MissionInfoView();
+      missionInfoView.pageContainer.getUserInfo();
+    });
+  </script>
+</body>
+
+</html>

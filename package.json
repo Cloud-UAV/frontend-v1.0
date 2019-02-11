@@ -1,0 +1,24 @@
+{
+    "name": "'clouduav'",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Mariam Dost",
+    "license": "ISC",
+    "devDependencies": {
+        "del": "^2.2.2",
+        "gulp": "^3.9.1",
+        "gulp-concat": "^2.6.1",
+        "gulp-connect": "^5.0.0",
+        "gulp-remove-code": "^1.0.2",
+        "gulp-rename": "^1.2.2",
+        "gulp-s3": "^0.11.0",
+        "gulp-sass": "^3.1.0",
+        "js-search": "^1.4.2",
+        "run-sequence": "^1.2.2",
+        "yargs": "^7.0.2"
+    }
+}

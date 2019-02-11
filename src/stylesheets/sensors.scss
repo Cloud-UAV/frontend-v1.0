@@ -1,0 +1,18 @@
+@import 'common';
+
+input.select-dropdown {
+    border: 1px solid rgb(191, 191, 191) !important;
+    padding: 0px 5px !important;
+    position: relative !important;
+    display: block !important;
+}
+
+.select-wrapper>span {
+    position: absolute;
+    top: 12px;
+    right: 0px;
+}
+
+a{
+    cursor: pointer;
+}

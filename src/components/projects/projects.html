@@ -1,0 +1,90 @@
+<html>
+
+<head>
+  <title>Projects</title>
+  <meta charset='UTF-8'>
+
+  <link rel="stylesheet" type="text/css" href="../../lib/css/libsConcatCSS.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <script type="text/javascript" src='../../lib/libsConcat.js'></script>
+
+  <link rel="stylesheet" type="text/css" href="../../stylesheets/projects.css">
+  <script src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.min.js"></script>
+
+  <script type="text/javascript" src='../../config.js'></script>
+  <script type="text/javascript" src='../assets/httpCalls.js'></script>
+  <script type="text/javascript" src='../assets/sharedComponents.js'></script>
+  <script type="text/javascript" src='./projectsController.js'></script>
+  <script type="text/javascript" src='./projectsView.js'></script>
+  <script type="text/javascript" src='./projects.js'></script>
+</head>
+
+<body>
+  <div id='pageContainer'>
+    <side-nav-bar v-bind:user='user' v-show='!loading'></side-nav-bar>
+    <header>
+      <ul class="dropdown-content" id="user_dropdown">
+        <li><a class="theme-text" href="/components/accountDetails/accountDetails.html">My Account</a></li>
+        <li><a class="theme-text" href="#" v-on:click="logoutBtn">Logout</a></li>
+      </ul>
+
+      <nav class="theme" role="navigation">
+        <div class="nav-wrapper">
+          <img class="brand-top" src="../../img/CloudUAV_White.png" />
+          <ul class="right">
+            <li>
+              <a class='right dropdown-button' href='' data-activates='user_dropdown'><i class=' material-icons'>account_circle</i></a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <nav class="theme" role="navigation">
+        <div class="nav-wrapper theme lighten-1">
+          <div class="row">
+            <div class="col s12">
+              <menubar-icon></menubar-icon>
+              <a href="#" class="breadcrumb">Home</a>
+              <a href="/components/projects/projects.html" class="breadcrumb">Projects</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <div class='loadingIcon' v-show='loading'>
+        <object data='../../img/sensorupLogosvg.svg' type='image/svg+xml'><div class='loadingGif'></div></object>
+      </div>
+
+      <div class="container" v-show='!loading'>
+        <div class="row mt-3">
+          <div v-for="items in groupedProjectData" class="row">
+            <div class="col s12 m6 l4" v-for='item in items'>
+              <div class="card theme lighten-1 ">
+                <div class="card-content white-text" v-on:click='viewProjectInfo(item.id, $event)'>
+                  <span class="card-title">{{item.name}}</span>
+                  <p>{{item.description}}</p>
+                </div>
+                <div class="card-action">
+                  <a class="modal-trigger" v-bind:href="'#projectViewModal_'+item.id">Delete</a>
+                </div>
+              </div>
+              <div v-bind:id="'projectViewModal_'+item.id" class="modal">
+                <div class="modal-content">
+                  <p>Are you sure you want to delete?</p>
+                </div>
+                <div class="modal-footer">
+                  <a href="#!" class="modal-action modal-close waves-effect btn-flat">Cancel</a>
+                  <a href="#!" v-show='item.userID == user.id' v-on:click='deleteProject(item.id, $event)' class="red white-text modal-action modal-close waves-effect btn-flat">Delete</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+</body>
+
+</html>

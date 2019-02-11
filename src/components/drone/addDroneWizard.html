@@ -1,0 +1,338 @@
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="../../lib/css/libsConcatCSS.css">
+    <script type="text/javascript" src='../../lib/libsConcat.js'></script>
+
+    <link rel="stylesheet" type="text/css" href="../../stylesheets/drone.css">
+    <link rel="stylesheet" href="/lib/css/bootstrap/bootstrap.min.css" />
+    <script type="text/javascript" src='../../config.js'></script>
+    <script type="text/javascript" src='../assets/httpCalls.js'></script>
+    <script type="text/javascript" src='./addDroneWizardView.js'></script>
+    <script type="text/javascript" src='./addDroneWizard.js'></script>
+
+    <style>
+        input.select-dropdown {
+            border: 1px solid rgb(191, 191, 191) !important;
+            padding: 5px 5px !important;
+            position: relative !important;
+            display: inline-block !important;
+        }
+
+        input.select-dropdown::after {
+            position: absolute !important;
+            content: "hdtgtt" !important;
+            top: 0px !important;
+            right: 0px !important;
+        }
+
+        .select-wrapper>span {
+            position: absolute;
+            top: 12px;
+            right: 0px;
+        }
+
+        ul.bullet-list {
+            display: list-item;
+        }
+
+        ul.bullet-list > li {
+            list-style-type: circle;
+            list-style-position: inside;
+        }
+        a.removeEmail{
+            cursor: pointer;
+            color: red;
+        }
+    </style>
+</head>
+
+<body style='overflow-x: hidden;'>
+    <span id='pageContainer' style='display: block;'>
+
+<div id="smartwizard">
+    <ul>
+        <li><a href="#step-1">Project<br /><small>Select Project</small></a></li>
+        <li><a href="#step-2">Compliance<br /><small>Upload File</small></a></li>
+        <li><a href="#step-3">Personnel<br /><small>Add Personnel</small></a></li>
+        <li><a href="#step-4">UAV<br /><small>Create UAV</small></a></li>
+        <li><a href="#step-5">Sensor<br /><small>Add Sensor</small></a></li>
+        <li><a href="#step-6">Share Project<br /><small>Add team members</small></a></li>
+        <li><a href="#step-7">Review<br /><small>Summary</small></a></li>
+    </ul>
+
+    <div>
+        <div id="step-1" class="">
+            <div class='row' style='margin-bottom: 5px;'>
+                <div class='col s12'>
+                    <p>
+                        <input name="projectGroup" type="radio" id="existingProject" class='with-gap' v-on:click='selectedRadioBtn("existingProject")' disabled/>
+                        <label for="existingProject">Choose existing project</label>
+                    </p>
+                </div>
+            </div>
+
+            <div class='row' style='margin-bottom: 5px; padding-left: 35px;' v-show='projectModel.showExistingProject'>
+                <div class="col s4">
+                    <div class="input-field col s12">
+                    <select v-model='projectModel.selectedProject' class='selectProject'>
+                        <option v-for='item in projectModel.projects' v-bind:value='item.id'>{{item.name}}</option>
+                    </select>
+                    </div>
+                </div>
+            </div>
+            <div class='row' style='margin-bottom: 5px;'>
+                <div class='col s12'>
+                    <p>
+                        <input name="projectGroup" type="radio" id="newProject" class='with-gap'  v-on:click='selectedRadioBtn("newProject")'/>
+                        <label for="newProject">Create new project</label>
+                    </p>
+                </div>
+            </div>
+            <div class='row' style='margin-bottom: 5px; padding-left: 35px;' v-show='projectModel.showCreateProject'>
+                <div class='col s12'>
+                    <h5>Create Project</h5><br/>
+                    <div class="input-field col s4">
+                        <input id="projectName" type="text" class="validate" placeholder="CloudUAV Project" v-model='projectModel.name'>
+                        <label for="projectName">Project Name</label>
+                    </div>
+                </div>
+            </div>
+            <div class='row' style='margin-bottom: 5px; padding-left: 35px;' v-show='projectModel.showCreateProject'>
+                <div class='col s12'>
+                    <div class="input-field col s4">
+                        <textarea class="materialize-textarea" placeholder='Description of project' id='textarea' v-model='projectModel.description'></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="step-2" class="">
+            <div class='row'>
+                <div class='col s12'>
+                    <h5>Upload Compliance File</h5>
+                </div>
+            </div>
+
+            <div class='row'>
+                <div class='col s12'>
+                    <form enctype="multipart/form-data" method='post'>
+                        <div class='fileInputBox'>
+                            <div class='fileInputBoxBorder'>
+                                <span id='fileNames'>
+                                        <div v-for='name in complianceFiles.fileNames' class='filesToUploadIcons'>
+                                            <div class='filename'>{{name}}</div>
+                                        </div>
+                                    </span>
+    <label class='fileInputLabel' v-show='complianceFiles.showFileLabel'>Drag and Drop</label>
+    <input type="file" id='file' placeholder="Upload one or more media" multiple :disabled='complianceFiles.dragDropArea==true ? true : false'>
+    </div>
+    </div>
+    </form>
+    </div>
+    </div>
+    </div>
+    <div id="step-3" class="">
+        <div class='row'>
+            <div class='col s12'>
+                <h5>Add Personnel</h5>
+            </div>
+        </div>
+        <div class='row'>
+            <div class='col s12'>
+                <div class="input-field col s5">
+                    <select multiple v-model='personnel.selectedPersonnel' class='selectPersonnel'>
+                        <option value='none' disabled selected>None</option>
+                        <option v-for='item in personnel.personnelArr' v-bind:value='item.id' class='customCheckbox'>{{item.firstName}} {{item.lastName}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="step-4" class="">
+        <div class='row' style='margin-bottom: 5px;'>
+            <div class='col s12'>
+                <p>
+                    <input name="droneGroup" type="radio" id="existingDrone" class='with-gap' v-on:click='selectedRadioBtn("existingDrone")' />
+                    <label for="existingDrone">Choose existing UAVs</label>
+                </p>
+            </div>
+        </div>
+
+        <div class='row' style='margin-bottom: 5px; padding-left: 35px;' v-show='droneModel.showExistingDrones'>
+            <div class="col s4">
+                <div class="input-field col s12">
+                    <select class='selectedDrone' multiple>
+                        <option value='none' disabled selected>None</option>
+                        <option v-for='item in droneModel.dronesArr' v-bind:value='item.id'>{{item.name}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class='row' style='margin-bottom: 5px;'>
+            <div class='col s12'>
+                <p>
+                    <input name="droneGroup" type="radio" id="newDrone" class='with-gap' v-on:click='selectedRadioBtn("newDrone")' />
+                    <label for="newDrone">Create new UAV</label>
+                </p>
+            </div>
+        </div>
+        <div class='row' style='margin-bottom: 5px; padding-left: 35px;' v-show='droneModel.showCreateDrone'>
+            <div class='col s5 droneImg'>
+                <img src="/img/drone.png" height='180' width='320' id='droneImg'>
+            </div>
+
+            <div class='col s7'>
+                <div class='row'>
+                    <div class='col s12' style='margin: 0px; padding: 0px;'>
+                        <div class="input-field col s7">
+                            <input id="name" type="text" class="validate" placeholder="John's drone" v-model='droneModel.name'>
+                            <label for="name">Name</label>
+                        </div>
+                    </div>
+                </div>
+                <div class='row'>
+                    <div class='col s12' style='margin: 0px; padding: 0px;'>
+                        <div class="input-field col s7">
+                            <i class="fa fa-pencil prefix"></i>
+                            <textarea class="materialize-textarea" placeholder='Description of drone' id='textarea' v-model='droneModel.description'></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class='row'>
+                    <div class='col s12' style='margin: 0px; padding: 0px;'>
+                        <div class="input-field col s7">
+                            <i class="fa fa-pencil prefix"></i>
+                            <textarea class="materialize-textarea" placeholder='Inventory' id='textarea' v-model='droneModel.inventory'></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="step-5" class="">
+        <div class='row'>
+            <div class='col s12'>
+                <h5>Sensor</h5>
+            </div>
+        </div>
+        <div class='row'>
+            <div class='col s12'>
+                <div class="input-field col s5">
+                    <select multiple v-model='sensor.selectedSensor' class='selectedSensor'>
+                        <option value='none' disabled selected>None</option>
+                        <option v-for='item in sensor.sensorArr' v-bind:value='item.id' class='customCheckbox'>{{item.name}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="step-6" class="">
+        <div class='row'>
+            <div class='col s12'>
+                <h5>Share Project</h5>
+            </div>
+        </div>
+        <div class='row'>
+            <div class='col s12'>
+                <div class="input-field col s4" style='display: table;'>
+                    <input placeholder="john@example.com" id="email" type="email" class="validate" v-model='shareModel.email'>
+                    <label for="email">Email</label>
+
+                </div>
+                <span class='suffix'>
+                    <a class='waves-effect waves-light light-blue btn' v-on:click='addSharedWithUsersEmail'>Add</a>
+                </span>
+            </div>
+        </div>
+        <div class='row'>
+            <div class='col s12'>
+                <h6>Share Project With Users:</h6>
+                <ul class='bullet-list'>
+                    <li v-for='item in shareModel.emailsArr'>{{item}} <a v-on:click='removeEmail(item)'>Remove</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="step-7" class="">
+        <div class='row' v-show='review.reviewErrorMsge' style='margin: 0px; padding: 0px;'>
+            <div class='col s12'>
+                <p class='errorMessage'><b>Error:</b> {{review.errorMessageContent}}</p>
+            </div>
+        </div>
+        <div class='row' style='margin: 0px; padding: 0px;'>
+            <div class='col s12'>
+                <h5>Review</h5>
+            </div>
+        </div>
+        <div class='row' style='margin: 0px; padding: 0px;'>
+            <div class='col s12'>
+                <h6>Project</h6>
+                <p>
+                    <b>Name:</b> {{projectModel.name}}
+                    <br/>
+                    <b>Description:</b> {{projectModel.description}}
+
+                </p>
+            </div>
+        </div>
+        <div class='row' style='margin: 0px; padding: 0px;'>
+            <div class='col s12'>
+                <h6>Compliance</h6>
+                <span id='fileNames'>
+                    <div v-for='name in complianceFiles.fileNames' class='filesToUploadIcons'>
+                        <div class='filename'>{{name}}</div>
+                    </div>
+                </span>
+            </div>
+        </div>
+        <div class='row' style='margin: 0px; padding: 0px;'>
+            <div class='col s12'>
+                <h6>Personnel</h6>
+                <ul class='bullet-list'>
+                    <li v-for='item in personnel.reviewPersonnel'>{{item.firstName}} {{item.lastName}}</li>
+                </ul>
+
+            </div>
+        </div>
+        <div class='row' style='margin: 0px; padding: 0px;'>
+            <div class='col s12'>
+                <h6>UAV</h6>
+                <p v-for='item in droneModel.reviewDrone'>
+                    <b>Name:</b> {{item.name}}
+                    <br/>
+                    <b>Description:</b> {{item.description}}
+                    <br/>
+                    <b>Inventory:</b> {{item.inventory}}
+
+                </p>
+            </div>
+        </div>
+        <div class='row' style='margin: 0px; padding: 0px;'>
+            <div class='col s12'>
+                <h6>Sensor</h6>
+                <ul class='bullet-list'>
+                    <li v-for='item in sensor.reviewSensor'>{{item.name}}</li>
+                </ul>
+            </div>
+        </div>
+        <div class='row' style='margin: 0px; padding: 0px;'>
+            <div class='col s12'>
+                <h6>Share project with: </h6>
+                <ul class='bullet-list'>
+                    <li v-for='item in shareModel.emailsArr'>{{item}}</li>
+                </ul>
+            </div>
+        </div>
+        <div class='row' style='margin: 0px; padding: 0px;'>
+            <div class='col s12'>
+                <br/>
+                <a class='waves-effect waves-light light-blue btn' v-on:click='createDrone'>Create</a>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    </span>
+</body>
+
+</html>

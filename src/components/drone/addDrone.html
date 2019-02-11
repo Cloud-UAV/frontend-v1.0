@@ -1,0 +1,333 @@
+<html>
+
+<head>
+  <title>Create Project</title>
+  <meta charset='UTF-8'>
+
+  <link rel="stylesheet" type="text/css" href="../../lib/css/libsConcatCSS.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script type="text/javascript" src='../../lib/libsConcat.js'></script>
+
+  <link rel="stylesheet" type="text/css" href="../../stylesheets/drone.css">
+
+  <script type="text/javascript" src='../../config.js'></script>
+  <script type="text/javascript" src='../assets/httpCalls.js'></script>
+  <script type="text/javascript" src='../assets/sharedComponents.js'></script>
+  <script type="text/javascript" src='./droneController.js'></script>
+  <script type="text/javascript" src='./addDroneView.js'></script>
+  <script type="text/javascript" src='./addDrone.js'></script>
+</head>
+
+<body>
+  <div id='pageContainer'>
+    <side-nav-bar v-bind:user='user' v-show='!loading'></side-nav-bar>
+    <header>
+      <ul class="dropdown-content" id="user_dropdown">
+        <li><a class="theme-text" href="/components/accountDetails/accountDetails.html">My Account</a></li>
+        <li><a class="theme-text" href="#" v-on:click="logoutBtn">Logout</a></li>
+      </ul>
+
+      <nav class="theme" role="navigation">
+        <div class="nav-wrapper">
+          <img class="brand-top" src="../../img/CloudUAV_White.png" />
+          <ul class="right">
+            <li>
+              <a class='right dropdown-button' href='' data-activates='user_dropdown'><i class=' material-icons'>account_circle</i></a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <nav class="theme" role="navigation">
+        <div class="nav-wrapper theme lighten-1">
+          <div class="row">
+            <div class="col s12">
+              <menubar-icon></menubar-icon>
+              <a href="/components/home/home.html" class="breadcrumb">Home</a>
+              <a href="#" class="breadcrumb">Create</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <div class="container-fluid">
+        <div class='loadingIcon' v-show='loading'>
+          <object data='../../img/sensorupLogosvg.svg' type='image/svg+xml'>
+		      <div class='loadingGif'></div>
+	      </object>
+        </div>
+        <div v-show='!loading'>
+          <div class="container">
+            <div class="row">
+              <div class="col s12">
+                <ul class="stepper">
+                  <li class="step active">
+                    <div class="step-title waves-effect">Project</div>
+                    <div class="step-content">
+                      <p class='stepDescriptionText'>Create new project or select from existing project</p>
+
+                      <div class='row'>
+                        <div class='col s12'>
+                          <input name="projectGroup" type="radio" id="existingProject" class='with-gap' v-on:click='selectedRadioBtn("existingProject")' disabled/>
+                          <label for="existingProject">Choose existing project</label>
+                        </div>
+                      </div>
+
+                      <div class='row' v-show='projectModel.showExistingProject'>
+                        <div class="col s12 input-field">
+                          <select v-model='projectModel.selectedProject' class='selectProject'>
+                                <option value='none' disabled selected>None</option>
+                                <option v-for='item in projectModel.projects' v-if='item.userID==user.id' v-bind:value='item.id'>{{item.name}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class='row'>
+                        <div class='col s12'>
+                          <input name="projectGroup" type="radio" id="newProject" class='with-gap' v-on:click='selectedRadioBtn("newProject")' />
+                          <label for="newProject">Create new project</label>
+                        </div>
+                      </div>
+                      <div class='row' v-show='projectModel.showCreateProject'>
+                        <div class="input-field col s12">
+                          <input id="projectName" type="text" class="validate" placeholder="CloudUAV Project" v-model='projectModel.name'>
+                          <label for="projectName">Project Name</label>
+                        </div>
+                      </div>
+                      <div class='row' v-show='projectModel.showCreateProject'>
+                        <div class="input-field col s12">
+                          <textarea class="validate materialize-textarea" data-length="255" placeholder='Description of project' id='textarea' v-model='projectModel.description'></textarea>
+                          <label for="projectDescription">Description</label>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col s12">
+                          <div class="step-actions">
+                            <button class="waves-effect waves-dark btn btn-block next-step" v-on:click="projectValidate">CONTINUE</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="step">
+                    <div class="step-title waves-effect">Compliance</div>
+                    <div class="step-content">
+                      <p class='stepDescriptionText'>Upload and attach project files including SFOCs and project information.</p>
+                      <div class='row'>
+                        <div class='col s12'>
+                          <form enctype="multipart/form-data" method='post'>
+                            <div class='fileInputBox'>
+                              <div class='fileInputBoxBorder'>
+                                <span id='fileNames'>
+                                        <div v-for='name in complianceFiles.fileNames' class='filesToUploadIcons'>
+                                            <div class='filename'>{{name}}</div>
+                                        </div>
+                                    </span>
+                                <label class='fileInputLabel' v-show='complianceFiles.showFileLabel'>Drag and Drop</label>
+                                <input type="file" id='file' placeholder="Upload one or more files" multiple :disabled='complianceFiles.dragDropArea==true ? true : false'>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                      <div class="step-actions">
+                        <button class="waves-effect waves-dark btn next-step" v-on:click="filesValidate">CONTINUE</button>
+                        <button class="waves-effect waves-dark btn-flat previous-step">BACK</button>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="step">
+                    <div class="step-title waves-effect">UAV</div>
+                    <div class="step-content">
+                      <div class='row'>
+                        <div class="input-field col s12">
+                          <select class='selectedDrone' multiple>
+                            <option value='none' disabled selected>None</option>
+                            <option v-for='item in droneModel.dronesArr' v-bind:value='item.id'>{{item.name}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="step-actions">
+                        <button class="waves-effect waves-dark btn next-step" v-on:click="uavValidate">CONTINUE</button>
+                        <button class="waves-effect waves-dark btn-flat previous-step">BACK</button>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="step">
+                    <div class="step-title waves-effect">Personnel</div>
+                    <div class="step-content">
+                      <p class='stepDescriptionText'>Please select the personnel and the role</p>
+                      <div class='row'>
+                        <div class="input-field col s12">
+                          <select multiple v-model='personnel.selectedPersonnel' class='selectPersonnel'>
+                              <option value='none' disabled selected>None</option>
+                              <option v-for='item in personnel.personnelArr' v-bind:value='item.id' class='customCheckbox'>{{item.firstName}} {{item.lastName}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class='row'>
+                        <div class='col s12 list'>
+                          <div class='row list-item' v-for='item in personnel.reviewPersonnel'>
+                            <div class='name col s12 m4'>{{item.firstName}} {{item.lastName}}</div>
+                            <div class='content col s12 m8'>
+                              <div class="input-field">
+                                <select v-model='personnel.selectedRole' class='selectPersonnelRole' >
+                                   <!-- <option value="" disabled selected>Choose the role</option> -->
+                                    <option v-for='role in item.Roles' v-bind:value='role.id'>{{role.name}}</option>
+                              </select>
+                                <label>Role</label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="step-actions">
+                        <button class="waves-effect waves-dark btn next-step" v-on:click="personnelValidate">CONTINUE</button>
+                        <button class="waves-effect waves-dark btn-flat previous-step">BACK</button>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="step">
+                    <div class="step-title waves-effect">Sensor</div>
+                    <div class="step-content">
+                      <div class='row'>
+                        <div class='input-field col s12'>
+                          <select multiple v-model='sensor.selectedSensor' class='selectedSensor'>
+                              <option value='none' disabled selected>None</option>
+                            <option v-for='item in sensor.sensorArr' v-bind:value='item.id' class='customCheckbox'>{{item.name}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="step-actions">
+                        <button class="waves-effect waves-dark btn next-step" v-on:click="sensorValidate">CONTINUE</button>
+                        <button class="waves-effect waves-dark btn-flat previous-step">BACK</button>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="step">
+                    <div class="step-title waves-effect">Share</div>
+                    <div class="step-content">
+                      <p class='stepDescriptionText'>Share Project With Users:</p>
+                      <div class='row'>
+                        <div class="col s9">
+                          <div class="input-field">
+                            <input id="email" type="email" class="validate" v-model='shareModel.email'>
+                            <label id="emailLabel" for="email">Email</label>
+                          </div>
+                        </div>
+                        <div class="col">
+                          <a class="btn-email-add btn-floating btn theme" v-on:click='addSharedWithUsersEmail'><i class="material-icons">add</i></a>
+                        </div>
+                      </div>
+                      <div class='row' v-show="shareModel.emailsArr.length>0">
+                        <div class='col s12'>
+                          <ul class="collection with-header">
+                            <li class="collection-header">
+                              <p>The project will be sharing with:</p>
+                            </li>
+                            <li v-for='item in shareModel.emailsArr' class="collection-item">{{item}}<a v-on:click='removeEmail(item)' class="secondary-content red-text"><i class="material-icons">delete_forever</i></a></li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div class="step-actions">
+                        <button class="waves-effect waves-dark btn next-step" v-on:click="emailValidate">CONTINUE</button>
+                        <button class="waves-effect waves-dark btn-flat previous-step">BACK</button>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="step">
+                    <div class="step-title waves-effect">Review</div>
+                    <div class="step-content">
+                      <p class='stepDescriptionText'>Review all info before creating entities.</p>
+                      <div class="row">
+                        <div class="col s12">
+                          <ul class="collapsible" data-collapsible="expandable">
+                            <li>
+                              <div class="collapsible-header active"><i class="material-icons theme-text text-blue-darken-1">dashboard</i>Project</div>
+                              <div class="collapsible-body">
+                                <span>
+                                    <b>Name:</b> {{projectModel.name}}
+                                    <br/>
+                                    <b>Description:</b> {{projectModel.description}}
+                                  </span>
+                              </div>
+                            </li>
+                            <li>
+                              <div class="collapsible-header active"><i class="material-icons theme-text text-blue-darken-1">insert_drive_file</i>Compliance</div>
+                              <div class="collapsible-body">
+                                <span id='fileNames'>
+                                      <div v-for='name in complianceFiles.fileNames' class='filesToUploadIcons'>
+                                          <div class='filename'>{{name}}</div>
+                                      </div>
+                                  </span>
+                              </div>
+                            </li>
+                            <li>
+                              <div class="collapsible-header active"><i class="material-icons theme-text text-blue-darken-1">people</i>Personnel</div>
+                              <div class="collapsible-body">
+                                <span>
+                                    <ul class='bullet-list'>
+                                      <li v-for='item in personnel.reviewPersonnel'>{{item.firstName}} {{item.lastName}}</li>
+                                    </ul>
+                                  </span>
+                              </div>
+                            </li>
+                            <li>
+                              <div class="collapsible-header active"><i class="material-icons theme-text text-blue-darken-1">flight</i>UAV</div>
+                              <div class="collapsible-body">
+                                <span>
+                                    <p v-for='item in droneModel.reviewDrone'>
+                                      <b>Name:</b> {{item.name}}
+                                      <br/>
+                                      <b>Description:</b> {{item.description}}
+                                      <br/>
+                                      <b>Inventory:</b> {{item.inventory}}
+                                    </p>
+                                  </span>
+                              </div>
+                            </li>
+                            <li>
+                              <div class="collapsible-header active"><i class="material-icons theme-text text-blue-darken-1">linked_camera</i>Sensor</div>
+                              <div class="collapsible-body">
+                                <span>
+                                    <ul class='bullet-list'>
+                                      <li v-for='item in sensor.reviewSensor'>{{item.name}}</li>
+                                    </ul>
+                                  </span>
+                              </div>
+                            </li>
+                            <li>
+                              <div class="collapsible-header active"><i class="material-icons theme-text text-blue-darken-1">folder_shared</i>Share project with:</div>
+                              <div class="collapsible-body">
+                                <span>
+                                    <ul class='bullet-list'>
+                                      <li v-for='item in shareModel.emailsArr'>{{item}}</li>
+                                    </ul>
+                                  </span>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div class='row projectCreatedMessage' v-show='messageBox'>
+                        <div class='col s12'>
+                          Project has been created!
+                        </div>
+                      </div>
+                      <div class="step-actions">
+                        <a class='waves-effect waves-light btn' v-on:click='createDrone' v-bind:class='{"accent-green": !projectModel.projectCreated, success: projectModel.projectCreated}'><span v-show='!projectModel.projectCreated'>Create</span><span v-show='projectModel.projectCreated'><i class='fa fa-check'></i></span></a>
+                        <button class="waves-effect waves-dark btn-flat previous-step">BACK</button>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+
+</html>

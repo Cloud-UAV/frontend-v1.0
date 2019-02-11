@@ -1,0 +1,77 @@
+<html>
+
+<head>
+  <title>Public Media</title>
+  <meta charset='UTF-8'>
+
+  <link rel="stylesheet" type="text/css" href="../../lib/css/libsConcatCSS.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script type="text/javascript" src='../../lib/libsConcat.js'></script>
+
+  <link rel="stylesheet" type="text/css" href="../../stylesheets/sharedFiles.css">
+  <script type="text/javascript" src='../../config.js'></script>
+  <script type="text/javascript" src='../assets/httpCalls.js'></script>
+  <script type="text/javascript" src='../assets/sharedComponents.js'></script>
+  <script type="text/javascript" src='./view.js'></script>
+  <script type="text/javascript" src='./publicFiles.js'></script>
+</head>
+
+<body>
+  <div id='pageContainer'>
+    <side-nav-bar v-bind:user='user' v-show='!loading'></side-nav-bar>
+    <header>
+      <ul class="dropdown-content" id="user_dropdown">
+        <li><a class="theme-text" href="/components/accountDetails/accountDetails.html">My Account</a></li>
+        <li><a class="theme-text" href="#" v-on:click="logoutBtn">Logout</a></li>
+      </ul>
+
+      <nav class="theme" role="navigation">
+        <div class="nav-wrapper">
+          <img class="brand-top" src="../../img/CloudUAV_White.png" />
+          <ul class="right">
+            <li>
+              <a class='right dropdown-button' href='' data-activates='user_dropdown'><i class=' material-icons'>account_circle</i></a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <nav class="theme" role="navigation">
+        <div class="nav-wrapper theme lighten-1">
+          <div class="row">
+            <div class="col s12">
+              <menubar-icon></menubar-icon>
+              <a href="/components/home/home.html" class="breadcrumb">Home</a>
+              <a href="/components/files/files.html" class="breadcrumb">My Media</a>
+              <a href="/components/publicFiles/publicFiles.html" class="breadcrumb">Public Media</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <div class='loadingIcon' v-show='loading'>
+        <object data='../../img/sensorupLogosvg.svg' type='image/svg+xml'>
+		<div class='loadingGif'></div>
+	</object>
+      </div>
+      <div v-show='!loading'>
+        <div class='container' v-show='viewFile'>
+          <div class='row'>
+            <div class='col s12'>
+              <div class='optionBtnsList'>
+                <a v-on:click='options' id='download'>Download</a>
+              </div>
+            </div>
+          </div>
+          <div class='row col s12'>
+            <iframe src="./table.html" onload='iframeLoaded()' id='iframe'></iframe>
+          </div>
+          <a href="" data-lightbox="image-1" data-title="" class='lightboxImage'>Image #1</a>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+
+</html>

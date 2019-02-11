@@ -1,0 +1,97 @@
+@import 'common';
+$full-size: 100%;
+.highlight {
+    background-color: rgba(228, 228, 228, 0.5);
+}
+
+
+#file {
+    height: 250px;
+    width: 100%;
+    opacity: 0;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+.fileInputBox {
+    position: relative;
+    border: 1px solid rgb(230, 230, 230);
+    width: 100%;
+    height: 250px;
+    padding: 15px;
+}
+
+.fileInputBox label {
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 45%;
+}
+
+.fileInputBoxBorder {
+    padding: 15px;
+    width: 100%;
+    height: 100%;
+    border: 2px dashed rgb(230, 230, 230);
+    overflow: auto;
+}
+
+.fileInputLabel {
+    font-size: 20px;
+}
+
+.filesToUploadIcons {
+    display: inline-block;
+    height: 100px;
+    min-width: 100px;
+    padding: 10px 10px;
+    margin-right: 10px;
+    background-color: rgba(230, 230, 230, 0.7);
+    border: 1px solid rgba(230, 230, 230, 0.7);
+    border-radius: 6px;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.filename {
+    z-index: 999;
+    height: 100%;
+    width: 100%;
+    color: rgb(64, 64, 64);
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    align-items: center;
+    word-break: break-word;
+}
+
+.filesToUploadIcons:before {
+    font-family: 'FontAwesome';
+    content: "\f016";
+    color: rgb(191, 191, 191);
+    font-size: 60px;
+    height: 100%;
+    width: 100%;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    align-items: center;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: -1;
+}
+
+.fa.fa-file-o {
+    font-size: 60px;
+    color: rgb(179, 179, 179);
+    height: 100%;
+    width: 100%;
+    z-index: 0;
+    text-align: center;
+}

@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>plas.io</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link rel="stylesheet" href="../../stylesheets/viewer.css" type="text/css">
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Archivo+Black' rel='stylesheet' type='text/css'>
+	</head>
+	<body data-custom-load="true" data-name="plasio_laszip"
+		data-tools="" data-configs="" data-path="">
+		<div class="fullscreen">
+			<div class="title">
+				<div class="name">plas.io</div>
+				<div id="no-support">Sorry, your browser does not support WebGL. <a href="http://get.webgl.org">Find out more</a>.</div>
+			</div>
+		</div>
+		<div id="progressBar" style="display: none">
+		</div>
+
+		<div class="drag-and-drop" style="display: none">
+			<div class="title">
+				Drop Here!
+			</div>
+		</div>
+		<div class="ui-layout-center">
+			<div id="container"></div>
+			<div id="fps"></div>
+			<div id="messages"></div>
+			<div id="pointCount"></div>
+            <div id="credits" style="display: none"></div>
+		</div>
+		<div class="ui-layout-east">
+			<input id="filebrowser" type="file" style="display:none" multiple>
+			<div id="mainActions">
+				<div class="section">
+					<div id="webglinfo" style="display: none"> </div>
+					<div class="p-head">
+						<h3>File</h3>
+					</div>
+					<div class="p-body">
+						<div id="loadError"></div>
+						<div id="naclerror" style="display: none"> </div>
+
+						<div class="props" style="display:none">
+							<div class="labeled-controls">
+								<h4>Data Set</h4>
+								<h5 class='switch-inst'>Switch between multiple data-sets</h5>
+								<div id="multi-files"></div>
+								<div class="auto-play" style="display: none">
+									<h5>Adjust the slider to auto-switch the media</h5>
+									<div id="playback-rate"></div>
+									<div id='playback-fps'></div>
+								</div>
+								<table class="table">
+								</table>
+							</div>
+						</div>
+
+
+					</div>
+				</div>
+
+				<div class="section">
+					<div class="p-head">
+						<h3>Camera</h3>
+					</div>
+					<div class="p-body">
+						<div class="labeled-controls">
+							<h4>Type</h4>
+							<h5>Perspective camera provides a 3D view, while orthographic and top-view cameras provide an ortho views</h5>
+							<div class="btn-group btn-group-sm btn-block" id="camera-type-group">
+								<button type="button" class="btn btn-default" id="perspective">Perspective</button>
+								<button type="button" class="btn btn-default" id="ortho">Orthographic</button>
+								<button type="button" class="btn btn-default" id="top-view">Top-View</button>
+							</div>
+							<h4 class="not-first">Reset</h4>
+							<h5>Take view back to its initial state</h5>
+							<button type="button" class="btn btn-sm btn-default btn-block" id="camera-reset">Reset View</button>
+							<h4 class="not-first">Field of View</h4>
+							<h5>Changing Field of View provides interesting effects, only applies to Perspective Cameras</h5>
+							<div id="fov"></div>
+						</div>
+
+
+					</div>
+				</div>
+
+				<div class="section">
+					<div class="p-head">
+						<h3>Data</h3>
+					</div>
+					<div class="p-body">
+						<div class="labeled-controls">
+							<h4>Particle Size</h4>
+							<h5>Larger sizes fill in the display</h5>
+							<div id="pointsize"></div>
+						</div>
+						<div class="labeled-controls">
+							<h4>Z-Exaggeration</h4>
+							<h5>Higher values make elevation deltas more apparent</h5>
+							<div id="zscale"></div>
+						</div>
+						<div class="labeled-controls">
+							<h4>Colorization</h4>
+							<h5>Choose an attribute to colorize</h5>
+							<div class="btn-group btn-block" id="colorsource">
+								<button type="button" class="btn btn-sm btn-default btn-block dropdown-toggle" data-toggle="dropdown" target="rgb">
+									RGB <span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu btn-block" role="menu">
+									<li><a href="#rgb">RGB</a></li>
+									<li><a href="#classification">Classification</a></li>
+									<li><a class="default-if-no-color" href="#heightmap-color">Heightmap Color</a></li>
+									<li><a href="#heightmap-color-inv">Heightmap Color Inverted</a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="labeled-controls">
+							<h4>Colormap</h4>
+							<h5>Color gradient values used for Heightmap Color and Classification color sources</h5>
+							<div class='btn-group btn-group-justified' id="colorSwatches">
+								<a type="button" class="btn btn-default btn-sm">
+									<img src="../../img/colormaps/blue-red.png" width="100%" height="10">
+								</a>
+								<a type="button" class="btn btn-default btn-sm">
+									<img src="../../img/colormaps/blue-hue.png" width="100%" height="10">
+								</a>
+								<a type="button" class="btn btn-default btn-sm">
+									<img src="../../img/colormaps/blue-orange.png" width="100%" height="10">
+								</a>
+								<a type="button" class="btn btn-default btn-sm">
+									<img src="../../img/colormaps/heat-map.png" width="100%" height="10">
+								</a>
+								<a type="button" class="btn btn-default btn-sm">
+									<img src="../../img/colormaps/awesome-green.png" width="100%" height="10">
+								</a>
+								<a type="button" class="btn btn-default btn-sm">
+									<img src="../../img/colormaps/pestel-shades.png" width="100%" height="10">
+								</a>
+								<a type="button" class="btn btn-default btn-sm">
+									<img src="../../img/colormaps/black-orange.png" width="100%" height="10">
+								</a>
+							</div>
+							<div id="colorCanvas">
+								<canvas id="colorCanvasObject"></canvas>
+							</div>
+							<div id="colormapClamp"></div>
+						</div>
+
+					</div>
+				</div>
+
+				<div class="section">
+					<div class="p-head">
+						<h3>Utilities</h3>
+					</div>
+					<div class="p-body">
+						<div class="labeled-controls">
+							<h4>Inundation</h4>
+							<h5>Enable an Inundation Plane and manipulate it using a slider</h5>
+							<div id="inun-container"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="listener"></div>
+
+		<!-- Modal -->
+		<div class="modal fade" id="creditsPage" tabindex="-1" role="dialog" aria-labelledby="creditsPageModal" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						 <h4 class="modal-title">plas.io Data Credits</h4>
+
+					</div>
+					<div class="modal-body">
+						<h4>The following media are to be credited by their original source</h4>
+						<ul>
+							<li>Autzen Stadium -- <a href="http://www.linkedin.com/pub/aaron-reyna/82/619/894">Aaron Reyna</a>, <a href="http://www.watershedsciences.com/">Watershed Sciences, Inc.</a>
+							</li>
+							<li>St. Helens -- <a href="http://www.linkedin.com/in/howardbutler">Howard Butler</a>, <a href="http://hobu.co">Hobu, Inc.</a>. USGS LiDAR + NAIP.
+							</li>
+							<li>Half Dome -- <a href="http://www.linkedin.com/in/howardbutler">Howard Butler</a>, <a href="http://hobu.co">Hobu, Inc.</a> USGS LiDAR + NAIP.
+							</li>
+
+							<li>Space Shuttle -- Data courtesy of the Smithsonian National Air and Space Museum, Steven F. Udvar-Hazy Center and the U.S. Army Corps of Engineers,  <a href="http://www.crrel.usace.army.mil/">Cold Regions Research and Engineering Laboratory</a>.
+							</li>
+                            <li>Cedar Falls, IA University Ave -- Iowa DOT</li>
+						</ul>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+
+		<!-- Modal -->
+		<div class="modal fade" id="openGreyhoundModal" tabindex="-1" role="dialog" aria-labelledby="openGreyhoundPage" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						 <h4 class="modal-title">Open a Greyhound source</h4>
+
+					</div>
+					<div class="modal-body ui-panel">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary">Open Pipeline</button>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+
+
+
+		<!-- Modal -->
+		<div class="modal fade" id="scalesPage" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="scalesPageLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						 <h4 class="modal-title">Specify Projection</h4>
+					</div>
+					<div class="modal-body">
+						<div style='text-align: center;padding-bottom: 10px;'>
+							<h4 style="font-weight: bold">The data doesn't appear to be in a projected coordinate space.</h4>
+							<h4 style="color:#999">Please indicate what you'd like to do:</h4>
+						</div>
+						<button type="button" class="btn btn-primary btn-lg btn-block" data-value="0">Leave as is</button>
+						<button type="button" class="btn btn-success btn-lg btn-block" data-value="1">Scale X/Y to Meters, Z is in Meters</button>
+						<button type="button" class="btn btn-info btn-lg btn-block" data-value="2">Scale X/Y to Meters, Z is in Feet</button>
+					</div>
+					<div class="modal-footer">
+						<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+
+		<!-- Modal -->
+		<div class="modal fade" id="docsPage" tabindex="-1" role="dialog" aria-labelledby="scalesPageLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title">plasio Documentation</h4>
+					</div>
+					<div class="modal-body">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+
+
+		<script src="badFile.js"></script>
+		<script src="viewer.js"></script>
+		<script type="x-shader/x-vertex" id="vertexshader">
+			uniform float pointSize;
+			uniform float intensityBlend;
+			uniform float maxColorComponent;
+
+			uniform float rgb_f;
+			uniform float intensity_f;
+			uniform float class_f;
+			uniform float height_f;
+			uniform float iheight_f;
+			uniform float map_f;
+			uniform float imap_f;
+
+			uniform vec3 xyzScale;
+
+			uniform float clampLower;
+			uniform float clampHigher;
+			uniform float colorClampLower;
+			uniform float colorClampHigher;
+			uniform vec2  zrange;
+			uniform vec3  offsets;
+			uniform sampler2D map;
+			uniform vec2  klassRange;
+
+			attribute vec3 color;
+			attribute float intensity;
+			attribute float classification;
+
+			varying vec4 col;
+			varying vec3 fpos;
+
+
+			void main() {
+				fpos = ((position.xyz - offsets) * xyzScale).xzy * vec3(-1, 1, 1);
+
+				vec4 mvPosition = modelViewMatrix * vec4( fpos, 1.0 );
+				gl_Position = projectionMatrix * mvPosition;
+				float nheight = (position.z - zrange.x) / (zrange.y - zrange.x);
+
+				float nhclamp = (nheight - colorClampLower) / (colorClampHigher - colorClampLower);
+
+				// compute color channels
+				//
+				vec3 norm_color = color / maxColorComponent;
+				vec3 map_color = texture2D(map, vec2(nhclamp, 0.5)).rgb;
+				vec3 inv_map_color = texture2D(map, vec2(1.0 - nhclamp, 0.5)).rgb;
+
+				float iklass = (classification - klassRange.x) / (klassRange.y - klassRange.x);
+				vec3 class_color = texture2D(map, vec2(iklass, 0.5)).rgb;
+
+				// compute intensity channels
+				float i = (intensity - clampLower) / (clampHigher - clampLower);
+				vec3 intensity_color = vec3(i, i, i);
+
+
+				vec3 height_color = vec3(nheight, nheight, nheight);
+				vec3 inv_height_color = vec3(1.0 - nheight, 1.0 - nheight, 1.0 - nheight);
+
+				// turn the appropriate channels on
+				//
+				vec3 color_source = norm_color * rgb_f +
+									class_color * class_f +
+									map_color * map_f +
+									inv_map_color * imap_f;
+
+				vec3 intensity_source = intensity_color * intensity_f +
+										height_color * height_f +
+										inv_height_color * iheight_f;
+
+				// blend and return
+				gl_PointSize = pointSize;
+				col = vec4(mix(color_source, intensity_source, intensityBlend), 1.0);
+			}
+		</script>
+		<script type="x-shader/x-fragment" id="fragmentshader">
+			uniform vec4 planes[6];
+			uniform int do_plane_clipping;
+
+			varying vec4 col;
+			varying vec3 fpos;
+
+			void main() {
+				if (do_plane_clipping > 0) {
+					for(int i = 0 ; i < 6 ; i ++) {
+						if (dot(planes[i], vec4(fpos, 1.0)) < 0.0)
+							discard;
+					}
+				}
+
+				gl_FragColor = col;
+			}
+		</script>
+	</body>
+</html>

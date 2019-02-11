@@ -1,0 +1,17 @@
+@import 'common';
+
+#map{
+    height: $full-size;
+    width: $full-size;
+    
+}
+
+.side-nav{
+    z-index: 9999 !important;
+     -webkit-transition: transform 0.3s;
+    transition: transform 0.3s;
+}
+
+button.easy-button-button{
+    padding: 0px !important;
+}

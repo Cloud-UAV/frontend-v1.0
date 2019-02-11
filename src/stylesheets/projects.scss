@@ -1,0 +1,19 @@
+@import 'common';
+@import 'responsive-table';
+
+.tab a.active {
+  color:$light-blue !important;;
+}
+.tabs .tab a:hover {
+  color: $light-blue !important;;
+}
+
+.tabs .indicator{
+  background-color: $light-blue !important;;
+}
+
+#allElems {
+  .card-content {
+    height:240px;
+  }
+}
